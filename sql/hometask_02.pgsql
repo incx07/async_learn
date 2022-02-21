@@ -74,6 +74,7 @@ SELECT count(employee_id) as count_of_employees,
 FROM public.employees
 WHERE hire_date > timestamp '2002-12-31' AND hire_date < timestamp '2004-01-01';
 
+
 /*  Print all employees who has changed at least 2 jobs (use JOB_HISTORY) */
 SELECT employee_id
 FROM public.job_history
