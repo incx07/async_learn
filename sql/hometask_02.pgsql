@@ -22,7 +22,7 @@ WHERE country_name SIMILAR TO '_+( |-)_+';
 /* List all persons without first name or with a first name with the only one letter (‘J’ or ‘J.’). */
 SELECT concat(first_name, ' ', last_name) AS full_name
 FROM public.employees
-WHERE first_name IS NULL OR first_name SIMILAR TO 'J.?';
+WHERE first_name IS NULL OR first_name SIMILAR TO '_.?';
 
 
 /* Calculate the total salary of employees taking into account bonuses. */
