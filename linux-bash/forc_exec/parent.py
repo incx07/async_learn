@@ -19,6 +19,8 @@ def main():
     string = input('Enter your string: ')
     child_pid = run_child(string)
     print(f'PID of parent: {os.getpid()}, PID of child: {child_pid}.')
+    done = os.waitpid(child_pid, 0)
+    print(f'Child is done: {done[0]}')
 
 
 if __name__ == '__main__':
