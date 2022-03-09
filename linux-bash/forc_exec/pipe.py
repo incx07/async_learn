@@ -13,7 +13,7 @@ if pid:
     os.close(r)
     print('Parent process is writing')
     os.write(w, command)
-    print('Execute program:', command)
+    print('Execute program:', command.decode())
     print('String to pass:', args)
 
 else:
