@@ -26,7 +26,3 @@ def download(count: int):
 
 if __name__ == '__main__':
     download(NUMBER_IMAGES_TO_DOWNLOAD)
-
-
-
-
