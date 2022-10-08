@@ -1,11 +1,11 @@
 <template>
     <div class="app">
-        <PostForm
+        <post-form
             @create="createPost"       
-        ></PostForm>
-        <PostList 
+        ></post-form>
+        <post-list 
             :posts="posts"
-        ></PostList>
+        ></post-list>
     </div>
 </template>
 
@@ -20,7 +20,6 @@ export default {
     PostForm,
     PostList
 },
-
     data() {
         return {
             posts: [
@@ -37,7 +36,6 @@ export default {
         },
     }
 }
-
 </script>
 
 

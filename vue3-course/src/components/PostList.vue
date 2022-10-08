@@ -2,11 +2,11 @@
     
     <div>
         <h3>Users List</h3>
-        <PostItem 
+        <post-item 
             v-for="post in posts"
             :post="post"
             >        
-        </PostItem>
+        </post-item>
     </div>
 
 </template>
@@ -14,7 +14,9 @@
 <script>
 import PostItem from '@/components/PostItem';
 export default {
-    components: {PostItem},
+    components: {
+        PostItem
+    },
     props: {
         posts: {
             type: Array,
@@ -22,15 +24,8 @@ export default {
         }
     }
 }
-
-
 </script>
 
 <style scoped>
-.post {
-    padding: 15px;
-    border: 2px solid teal;
-    margin-top: 15px;
-}
     
 </style>
