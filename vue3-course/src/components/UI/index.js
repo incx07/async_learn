@@ -1,7 +1,10 @@
 import MyButton from '@/components/UI/MyButton'
 import MyInput from '@/components/UI/MyInput'
+import MyDialog from '@/components/UI/MyInput'
+
 
 export default [
     MyButton, 
-    MyInput
-]
+    MyInput,
+    MyDialog
+];

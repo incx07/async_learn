@@ -1,7 +1,6 @@
 <template>
-    
-    <div>
-        <h3>Users List</h3>
+    <div v-if="posts.length > 0">
+        <h3>Posts List</h3>
         <post-item 
             v-for="post in posts"
             :post="post"
@@ -10,7 +9,7 @@
             >        
         </post-item>
     </div>
-
+    <h2 v-else style="color: red">Empty list</h2>
 </template>
 
 <script>
