@@ -1,12 +1,19 @@
 <template>
     <div class="app">
         <h1>My Application</h1>
-        <my-button
-            @click="showDialog"
-            style="margin: 15px 0;"
-        >
-            Add post
-        </my-button>
+        <div class="app__btns">
+            <my-button
+                @click="showDialog"
+            >
+                Add post
+            </my-button>
+            <my-select
+                v-model="selectedSort"
+                :options="sortOptions"
+            >
+
+            </my-select>           
+        </div>
         <my-dialog v-model:show="dialogVisible">
             <post-form
                 @create="createPost"       
@@ -15,7 +22,9 @@
         <post-list 
             :posts="posts"
             @remove="removePost"
+            v-if="!isPostsLoadind"
         ></post-list>
+        <div v-else> Posts are loading...</div>
     </div>
 </template>
 
@@ -24,22 +33,29 @@
 import PostForm from "./components/PostForm.vue";
 import PostList from "./components/PostList.vue";
 import MyDialog from "./components/UI/MyDialog.vue";
+import axios from 'axios'
+import MyButton from "./components/UI/MyButton.vue";
+import MySelect from "./components/UI/MySelect.vue";
 
 
 export default {
     components: {
     PostForm,
     PostList,
-    MyDialog
+    MyDialog,
+    MyButton,
+    MySelect
 },
     data() {
         return {
-            posts: [
-                {id: 1, title: 'Post 1', body: 'Long description 1'},
-                {id: 2, title: 'Post 2', body: 'Long description 2'},
-                {id: 3, title: 'Post 3', body: 'Long description 3'},
-            ],
+            posts: [],
             dialogVisible: false,
+            isPostsLoadind: false,
+            selectedSort: '',
+            sortOptions: [
+                {value: 'title', name: 'by title'},
+                {value: 'body', name: 'by body'},
+            ]
         }
     },
     methods: {
@@ -52,7 +68,21 @@ export default {
         },
         showDialog() {
             this.dialogVisible = true;
+        },
+        async fetchPosts() {
+            this.isPostsLoadind = true;
+            try {
+                const responce = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+                this.posts = responce.data;
+            } catch (error) {
+                alert('Error!')
+            } finally {
+                this.isPostsLoadind = false;
+            }
         }
+    },
+    mounted() {
+        this.fetchPosts();
     }
 }
 </script>
@@ -66,6 +96,11 @@ export default {
 }
 .app {
     padding: 20px;
+}
+.app__btns {
+    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 </style>
