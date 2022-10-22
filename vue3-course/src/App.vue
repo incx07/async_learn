@@ -75,6 +75,7 @@ export default {
             sortOptions: [
                 {value: 'title', name: 'by title'},
                 {value: 'body', name: 'by body'},
+                {value: 'id', name: 'by id'},
             ]
         }
     },
@@ -116,7 +117,11 @@ export default {
     computed: {
         sortedPosts() {
             return [...this.posts].sort((post1, post2) => {
+                if (this.selectedSort === 'id') {
+                    return post1[this.selectedSort] - post2[this.selectedSort]
+                } else {
                 return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+                }
             })
         },
         sortedAndSearchedPosts() {
