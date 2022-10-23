@@ -16,7 +16,6 @@
                 v-model="selectedSort"
                 :options="sortOptions"
             >
-
             </my-select>           
         </div>
         <my-dialog v-model:show="dialogVisible">
@@ -30,22 +29,13 @@
             v-if="!isPostsLoadind"
         ></post-list>
         <div v-else> Posts are loading...</div>
-        <div class="page__wrapper">
-            <div 
-                v-for="pageNumber in totalPages" 
-                :key="pageNumber"
-                class="page"
-                :class="{
-                    'current-page': page === pageNumber
-                }"
-                @click="changePage(pageNumber)"
-                >
-                {{ pageNumber }}
-            </div>
-        </div>
+        <my-paginator
+                v-model="page"
+                :pages="totalPages"
+        >
+        </my-paginator>    
     </div>
 </template>
-
 
 <script>
 import axios from 'axios';
@@ -53,6 +43,7 @@ import PostForm from "./components/PostForm.vue";
 import PostList from "./components/PostList.vue";
 import MyDialog from "./components/UI/MyDialog.vue";
 import MySelect from "./components/UI/MySelect.vue";
+import MyPaginator from './components/UI/MyPaginator.vue';
 
 
 export default {
@@ -61,6 +52,7 @@ export default {
     PostList,
     MyDialog,
     MySelect,
+    MyPaginator
 },
     data() {
         return {
@@ -90,9 +82,6 @@ export default {
         showDialog() {
             this.dialogVisible = true;
         },
-        changePage(pageNumber) {
-            this.page = pageNumber;
-        },
         async fetchPosts() {
             this.isPostsLoadind = true;
             try {
@@ -120,7 +109,7 @@ export default {
                 if (this.selectedSort === 'id') {
                     return post1[this.selectedSort] - post2[this.selectedSort]
                 } else {
-                return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
+                    return post1[this.selectedSort]?.localeCompare(post2[this.selectedSort])
                 }
             })
         },
@@ -150,16 +139,5 @@ export default {
     margin: 15px 0;
     display: flex;
     justify-content: space-between;
-}
-.page__wrapper {
-    display: flex;
-    margin-top: 15px;
-}
-.page {
-    border: 1px solid black;
-    padding: 10px;
-}
-.current-page {
-    border: 2px solid teal;
 }
 </style>
