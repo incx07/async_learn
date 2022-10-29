@@ -29,11 +29,14 @@
             v-if="!isPostsLoadind"
         ></post-list>
         <div v-else> Posts are loading...</div>
-        <my-paginator
+        <div ref="observer" class="observer"></div>
+
+<!--        <my-paginator
                 v-model="page"
                 :pages="totalPages"
         >
-        </my-paginator>    
+        </my-paginator> -->
+
     </div>
 </template>
 
@@ -98,10 +101,38 @@ export default {
             } finally {
                 this.isPostsLoadind = false;
             }
+        }, 
+        async loadMorePosts() {
+            this.page += 1;
+            try {
+                const responce = await axios.get('https://jsonplaceholder.typicode.com/posts', {
+                    params: {
+                        _page: this.page,
+                        _limit: this.limit
+                    }
+                });
+                this.totalPages = Math.ceil(responce.headers['x-total-count'] / this.limit);
+                this.posts = [...this.posts, ...responce.data];
+            } catch (error) {
+                alert('Error!')
+            }
         }
     },
     mounted() {
         this.fetchPosts();
+        const options = {
+            rootMargin: '0px',
+            threshold: 1.0
+            }
+        
+        const callback = (entries, observer) => {
+            if (entries[0].isIntersecting && this.page < this.totalPages) {
+                this.loadMorePosts()
+            }
+        };
+
+        const observer = new IntersectionObserver(callback, options);
+        observer.observe(this.$refs.observer)
     },
     computed: {
         sortedPosts() {
@@ -118,9 +149,9 @@ export default {
         }
     },
     watch: {
-        page() {
-            this.fetchPosts()
-        }
+//        page() {
+//            this.fetchPosts()
+//        }
     }
 }
 </script>
@@ -139,5 +170,9 @@ export default {
     margin: 15px 0;
     display: flex;
     justify-content: space-between;
+}
+.observer {
+    height: 30px;
+    background: green;
 }
 </style>
