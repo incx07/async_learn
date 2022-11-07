@@ -42,7 +42,6 @@ import PostForm from "@/components/PostForm.vue";
 import PostList from "@/components/PostList.vue";
 import MyDialog from "@/components/UI/MyDialog.vue";
 import MySelect from "@/components/UI/MySelect.vue";
-import MyPaginator from '@/components/UI/MyPaginator.vue';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 
 
@@ -52,7 +51,6 @@ export default {
     PostList,
     MyDialog,
     MySelect,
-    MyPaginator
 },
     data() {
         return {
