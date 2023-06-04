@@ -1,0 +1,23 @@
+{% extends "task/base.html" %}
+
+{% block content %}
+    <h3>Products</h3>
+    <table>
+        <tr>
+            <th>created_at</th>
+            <th>id</th>
+            <th>name</th>
+            <th>credit_request</th>
+            <th>producer</th>
+        </tr>
+        {% for product in object_list %}
+            <tr>
+            <td>{{ product.created_at }}</td>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.credit_request_id }}</td>
+            <td>{{ product.producer_id }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

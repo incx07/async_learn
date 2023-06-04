@@ -1,0 +1,16 @@
+{% extends "task/base.html" %}
+
+{% block content %}
+    <h3>Enter contract ID:</h3>
+    <form method="GET">
+        <input type="search" placeholder="ID" name="get_producers">
+        <button type="submit">Find</button>
+    </form>
+    {% if error %}
+        <h3>{{ error }}</h3>
+    {% endif %}
+    {% if producers_id %}
+        <h3>Producers ID: {{ producers_id|join:", " }}</h3>
+    {% endif %}
+{% endblock %}
+s

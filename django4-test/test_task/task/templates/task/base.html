@@ -1,0 +1,23 @@
+<html lang="ru">
+
+<style>
+table, th, td {
+    border:1px solid black;
+}
+</style>
+
+<head>
+    <title>Test App</title>
+</head>
+
+<body>
+    <a href="{% url 'index' %}">Main</a> | 
+    <a href="{% url 'contract-list' %}">Contracts</a> | 
+    <a href="{% url 'credit-list' %}">Credit requests</a> | 
+    <a href="{% url 'producer-list' %}">Producers</a> | 
+    <a href="{% url 'product-list' %}">Products</a>
+    {% block content %}
+    {% endblock %}
+</body>
+
+</html>

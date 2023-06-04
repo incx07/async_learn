@@ -1,0 +1,17 @@
+{% extends "task/base.html" %}
+
+{% block content %}
+    <h3>Contracts</h3>
+    <table>
+        <tr>
+            <th>created_at</th>
+            <th>id</th>
+        </tr>
+        {% for contract in object_list %}
+            <tr>
+            <td>{{ contract.created_at }}</td>
+            <td>{{ contract.id }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
