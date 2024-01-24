@@ -3,15 +3,14 @@ Find all departments that are either located in Canada (country_id = 'CA)
 or have no less than 10 people.
 */
 
--- via subqueries and joins
+-- via subqueries and joins (without union)
 
 SELECT COALESCE(q1.department_id, q2.department_id) department_id,
 	   COALESCE(q1.department_name, q2.department_name) department_name
 FROM (
 	SELECT d.department_id, d.department_name
 	FROM departments d, locations l
-	WHERE d.location_id = l.location_id
-		  AND l.country_id = 'CA'
+	WHERE d.location_id = l.location_id AND l.country_id = 'CA'
 ) q1 FULL JOIN (
 	SELECT d.department_id , d.department_name
 	FROM  departments d, employees e
@@ -77,3 +76,32 @@ FROM (
 	FROM employees e INNER JOIN job_history h USING (employee_id)
 ) q
 GROUP BY full_name
+
+
+/*
+Find out all employees, that are now on the same position and in the same department
+as they were in the past.
+*/
+
+SELECT employee_id, job_id, department_id
+FROM employees
+INTERSECT
+SELECT employee_id, job_id, department_id
+FROM job_history;
+
+
+/*
+Delete all jobs that no one takes currently and no one took in the past
+*/
+
+DELETE FROM jobs
+WHERE job_id IN (
+	SELECT j.job_id
+	FROM jobs j
+	EXCEPT
+	SELECT e.job_id
+	FROM employees e
+	EXCEPT
+	SELECT h.job_id
+	FROM job_history h
+);
