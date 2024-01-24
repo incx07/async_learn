@@ -6,7 +6,7 @@ or have no less than 10 people.
 -- via subqueries and joins (without union)
 
 SELECT COALESCE(q1.department_id, q2.department_id) department_id,
-	   COALESCE(q1.department_name, q2.department_name) department_name
+	COALESCE(q1.department_name, q2.department_name) department_name
 FROM (
 	SELECT d.department_id, d.department_name
 	FROM departments d, locations l
@@ -75,7 +75,7 @@ FROM (
 	SELECT e.first_name || ' '||e.last_name AS full_name, h.job_id
 	FROM employees e INNER JOIN job_history h USING (employee_id)
 ) q
-GROUP BY full_name
+GROUP BY full_name;
 
 
 /*
