@@ -1,5 +1,5 @@
 /*
-Find all departments that are either located in Canada (country_id = 'CA)
+Find all departments that are either located in Canada (country_id = 'CA')
 or have no less than 10 people.
 */
 
