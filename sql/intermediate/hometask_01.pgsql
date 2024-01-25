@@ -27,11 +27,11 @@ Specify “Currently” or “In the past” in a separate column.
 
 WITH programmer_id AS (SELECT job_id FROM jobs WHERE job_title = 'Programmer')
 
-SELECT e.first_name || ' '||e.last_name AS full_name
+SELECT e.first_name || ' '||e.last_name AS full_name, 'Currently' AS status
 FROM employees e
 WHERE e.job_id = (SELECT * FROM programmer_id)
 UNION
-SELECT e.first_name || ' '||e.last_name
+SELECT e.first_name || ' '||e.last_name, 'In the past' AS status
 FROM employees e
 WHERE e.employee_id IN (
 	SELECT h.employee_id
