@@ -2,6 +2,24 @@
 (slide 26) Information about blank passport forms are stored in database table FORMS,
 one row per form. Due to paper saving initiative, we should show available forms
 in continuous ranges. Write a query to produce desired report.
+
+CREATE TABLE IF NOT EXISTS forms
+(
+    seria character varying(30),
+    numb integer
+);
+
+INSERT INTO forms(
+	seria, numb)
+	VALUES (AA,100000)
+	VALUES (AA,100001)
+	VALUES (AA,100005)
+	VALUES (AA,100006)
+	VALUES (BB,100004)
+	VALUES (BB,100010)
+	VALUES (BB,100011)
+	VALUES (BB,100012);
+
 */
 
 
