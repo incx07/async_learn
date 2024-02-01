@@ -1,0 +1,18 @@
+/*
+(slide 26) Information about blank passport forms are stored in database table FORMS,
+one row per form. Due to paper saving initiative, we should show available forms
+in continuous ranges. Write a query to produce desired report.
+*/
+
+
+WITH prep AS (
+    SELECT
+        seria, numb,
+        numb - ROW_NUMBER() OVER(PARTITION BY seria ORDER BY numb) as grp
+    FROM forms
+)
+SELECT
+    seria, MIN(numb) as numb1, MAX(numb) as numb2
+FROM prep
+GROUP BY seria, grp
+ORDER BY seria, numb1;
