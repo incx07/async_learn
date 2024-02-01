@@ -10,7 +10,7 @@ WHERE first_name ~ '(.)\1' AND last_name ~ '(.)\1'
 
 /*
 Considering that any record in the table regtest (created early test table) fits
-the template (on the slide 30) return the list of unique cities.
+the template (on the slide 30) - return the list of unique cities.
 */
 
 SELECT DISTINCT (matches[3]) AS city
