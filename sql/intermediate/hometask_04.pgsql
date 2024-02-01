@@ -8,7 +8,6 @@ CREATE TABLE IF NOT EXISTS forms
     seria character varying(30),
     numb integer
 );
-
 INSERT INTO forms(
 	seria, numb)
 	VALUES (AA,100000)
@@ -19,9 +18,7 @@ INSERT INTO forms(
 	VALUES (BB,100010)
 	VALUES (BB,100011)
 	VALUES (BB,100012);
-
 */
-
 
 WITH prep AS (
     SELECT
