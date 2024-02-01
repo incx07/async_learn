@@ -108,19 +108,14 @@ WHERE mcduck_rank <= 5;
 
 
 -- return not more than N rows (if last value has tail - don't get rows with last value):
--- (the solution below is not correct, I did not figure out the valid one)
 
-WITH ranked_employees AS (
-	SELECT * FROM (
-		SELECT last_name, salary,
-			   RANK() OVER (ORDER BY salary DESC) AS rank
-		FROM employees) e
-	WHERE e.rank <= 5
+WITH temp AS
+(
+    SELECT last_name, salary,
+		ROW_NUMBER() OVER (ORDER BY salary DESC) AS rownum,
+		RANK() OVER (ORDER BY salary DESC) AS ranking
+    FROM employees
 )
 SELECT *
-FROM (
-    SELECT *,
-           LEAD(rank) OVER (ORDER BY salary DESC) AS next_rank
-    FROM ranked_employees
-) t
-WHERE (rank < 5) OR (rank = 5 AND next_rank > 5);
+FROM temp
+WHERE ranking < (SELECT ranking FROM temp WHERE rownum = 5 + 1)
