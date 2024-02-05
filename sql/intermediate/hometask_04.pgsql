@@ -56,3 +56,52 @@ SELECT first_name, last_name, hire_date, salary,
 						AND INTERVAL '90 day' FOLLOWING) AS total_salary
 FROM employees
 ORDER BY hire_date;
+
+
+/*
+For each employee from EMPLOYEES table show last name of the first employee
+hired in the same year and last employee, hired in the same year.
+*/
+
+SELECT first_name, last_name, hire_date,
+	FIRST_VALUE(last_name) OVER (PARTITION BY EXTRACT(YEAR FROM hire_date)
+								 ORDER BY hire_date
+								) AS first_hired,
+	FIRST_VALUE(last_name) OVER (PARTITION BY EXTRACT(YEAR FROM hire_date)
+								 ORDER BY hire_date DESC
+								) AS last_hired
+FROM employees
+ORDER BY EXTRACT(YEAR FROM hire_date);
+
+
+ /*
+Table TUMBLER stores "turn on" and "turn off" events
+for some machine:
+    - event_time - date and time of event
+    - event_type - "ON" of "OFF"
+Calculate how much time (in days) machine were ON and OFF
+during period represented in TUMBLER table
+Note: "ON" event can be followed by "OFF" event only and vice virsa
+
+CREATE TABLE IF NOT EXISTS tumbler
+(
+    event_time TIMESTAMP NOT NULL,
+    event_type VARCHAR
+);
+
+INSERT INTO tumbler (event_time, event_type)
+VALUES ('2012-01-01','ON'),
+	   ('2012-01-17','OFF'),
+	   ('2012-01-19','ON'),
+	   ('2012-02-28','OFF'),
+	   ('2012-03-02','ON');
+
+*/
+
+SELECT event_type, SUM(diff) AS total_time
+FROM (
+	SELECT event_type,
+		LEAD(event_time, 1, CURRENT_DATE) OVER (ORDER BY event_time) - event_time AS diff
+	FROM tumbler
+) sq
+GROUP BY event_type;
