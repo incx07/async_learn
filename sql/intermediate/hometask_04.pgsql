@@ -39,9 +39,9 @@ hired just before him/her and three people hired just after.
 */
 
 SELECT first_name, last_name, hire_date, salary,
-	   ROUND(AVG(salary) OVER(ORDER BY hire_date
-                         ROWS BETWEEN 2 PRECEDING AND 3 FOLLOWING), 2
-			) AS avg_salary
+       ROUND(AVG(salary) OVER(ORDER BY hire_date 
+			      ROWS BETWEEN 2 PRECEDING AND 3 FOLLOWING
+			    ), 2) AS avg_salary
 FROM employees
 ORDER BY hire_date;
 
@@ -51,9 +51,9 @@ For each employee show total salary of people hired 90 days just before or after
 */
 
 SELECT first_name, last_name, hire_date, salary,
-	   SUM(salary) OVER(ORDER BY hire_date
-                        RANGE BETWEEN INTERVAL '90 day' PRECEDING
-						AND INTERVAL '90 day' FOLLOWING) AS total_salary
+	   SUM(salary) OVER(ORDER BY hire_date 
+		       RANGE BETWEEN INTERVAL '90 day' PRECEDING 
+		       AND INTERVAL '90 day' FOLLOWING) AS total_salary
 FROM employees
 ORDER BY hire_date;
 
@@ -63,13 +63,11 @@ For each employee from EMPLOYEES table show last name of the first employee
 hired in the same year and last employee, hired in the same year.
 */
 
-SELECT first_name, last_name, hire_date,
-	FIRST_VALUE(last_name) OVER (PARTITION BY EXTRACT(YEAR FROM hire_date)
-								 ORDER BY hire_date
-								) AS first_hired,
-	FIRST_VALUE(last_name) OVER (PARTITION BY EXTRACT(YEAR FROM hire_date)
-								 ORDER BY hire_date DESC
-								) AS last_hired
+SELECT first_name, last_name, hire_date, 
+       FIRST_VALUE(last_name) OVER (PARTITION BY EXTRACT(YEAR FROM hire_date) 
+			ORDER BY hire_date) AS first_hired,
+       FIRST_VALUE(last_name) OVER (PARTITION BY EXTRACT(YEAR FROM hire_date)
+			ORDER BY hire_date DESC) AS last_hired
 FROM employees
 ORDER BY EXTRACT(YEAR FROM hire_date);
 
@@ -101,7 +99,7 @@ VALUES ('2012-01-01','ON'),
 SELECT event_type, SUM(diff) AS total_time
 FROM (
 	SELECT event_type,
-		LEAD(event_time, 1, CURRENT_DATE) OVER (ORDER BY event_time) - event_time AS diff
+	       LEAD(event_time, 1, CURRENT_DATE) OVER (ORDER BY event_time) - event_time AS diff
 	FROM tumbler
 ) sq
 GROUP BY event_type;
